@@ -19,6 +19,7 @@
   },
   "extra": {
     "hyperf": {
+      "config": "chep6915\\HyperfScheduledTask\\ConfigProvider",
       "service-providers": [
         "chep6915\\ScheduledTask\\ServiceProvider"
       ]
