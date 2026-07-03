@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace chep6915\ScheduledTask;
+namespace Chep6915\HyperfScheduledTask;
 
 use Hyperf\Framework\AbstractServiceProvider;
 

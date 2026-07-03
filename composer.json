@@ -14,14 +14,14 @@
   },
   "autoload": {
     "psr-4": {
-      "chep6915\\ScheduledTask\\": "src/"
+      "Chep6915\\HyperfScheduledTask\\": "src/"
     }
   },
   "extra": {
     "hyperf": {
-      "config": "chep6915\\HyperfScheduledTask\\ConfigProvider",
+      "config": "Chep6915\\HyperfScheduledTask\\ConfigProvider",
       "service-providers": [
-        "chep6915\\ScheduledTask\\ServiceProvider"
+        "Chep6915\\HyperfScheduledTask\\ServiceProvider"
       ]
     }
   }

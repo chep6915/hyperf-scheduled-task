@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace chep6915\HyperfScheduledTask;
+namespace Chep6915\HyperfScheduledTask;
 
 class ConfigProvider
 {
