@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "YourName\\ScheduledTask\\": "src/"
+      "chep6915\\ScheduledTask\\": "src/"
     }
   },
   "extra": {
