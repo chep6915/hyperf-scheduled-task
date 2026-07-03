@@ -14,7 +14,7 @@ class ConfigProvider
                 [
                     'id' => 'migration',
                     'description' => 'The migrations for hyperf-scheduled-task.',
-                    'source' => __DIR__ . '/../migrations/create_scheduled_tasks_table.php', // 你套件內的源路徑
+                    'source' => __DIR__ . '/migrations/create_scheduled_tasks_table.php', // 你套件內的源路徑
                     'destination' => BASE_PATH . '/migrations/' . date('Y_m_d_His') . '_create_scheduled_tasks_table.php', // 目標專案路徑
                 ],
                 [
