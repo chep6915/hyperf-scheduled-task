@@ -119,7 +119,7 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
                 throw new \RuntimeException("執行類別缺少 execute() 方法: {$executeClass}");
             }
 
-            $result = $taskInstance->execute();
+            $result = $taskInstance->execute($logId);
 
             $executionTime = (int)((microtime(true) - $startTime) * 1000); // 毫秒
 
