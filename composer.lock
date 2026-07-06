@@ -1,0 +1,823 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7e27b3acd428a393046a08ae8574177c",
+    "packages": [
+        {
+            "name": "dragonmantank/cron-expression",
+            "version": "v3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dragonmantank/cron-expression.git",
+                "reference": "d61a8a9604ec1f8c3d150d09db6ce98b32675013"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/d61a8a9604ec1f8c3d150d09db6ce98b32675013",
+                "reference": "d61a8a9604ec1f8c3d150d09db6ce98b32675013",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2|^8.3|^8.4|^8.5"
+            },
+            "replace": {
+                "mtdowling/cron-expression": "^1.0"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan": "^1.12.32|^2.1.31",
+                "phpunit/phpunit": "^8.5.48|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Tankersley",
+                    "email": "chris@ctankersley.com",
+                    "homepage": "https://github.com/dragonmantank"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "support": {
+                "issues": "https://github.com/dragonmantank/cron-expression/issues",
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/dragonmantank",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-10-31T18:51:33+00:00"
+        },
+        {
+            "name": "fig/http-message-util",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message-util.git",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "psr/http-message": "The package containing the PSR-7 interfaces"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fig\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Utility classes and constants for use with PSR-7 (psr/http-message)",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/http-message-util/issues",
+                "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
+            },
+            "time": "2020-11-24T22:02:12+00:00"
+        },
+        {
+            "name": "hyperf/context",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/context.git",
+                "reference": "caf0929d84571f68029a1d6e0bcabf1956312e04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/context/zipball/caf0929d84571f68029a1d6e0bcabf1956312e04",
+                "reference": "caf0929d84571f68029a1d6e0bcabf1956312e04",
+                "shasum": ""
+            },
+            "require": {
+                "hyperf/engine": "^2.0",
+                "hyperf/macroable": "~3.2.0",
+                "php": ">=8.2"
+            },
+            "suggest": {
+                "swow/psr7-plus": "Required to use RequestContext and ResponseContext"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Context\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A coroutine/application context library.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "Context",
+                "hyperf",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-06-07T09:04:32+00:00"
+        },
+        {
+            "name": "hyperf/contract",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/contract.git",
+                "reference": "cd476c11ec79abfb4b5614512f9ad0b186a217e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/contract/zipball/cd476c11ec79abfb4b5614512f9ad0b186a217e2",
+                "reference": "cd476c11ec79abfb4b5614512f9ad0b186a217e2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Contract\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The contracts of Hyperf.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-06-07T09:04:32+00:00"
+        },
+        {
+            "name": "hyperf/coordinator",
+            "version": "v3.2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/coordinator.git",
+                "reference": "51804b956777e1f9936cadc9d100207bea5e8b02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/coordinator/zipball/51804b956777e1f9936cadc9d100207bea5e8b02",
+                "reference": "51804b956777e1f9936cadc9d100207bea5e8b02",
+                "shasum": ""
+            },
+            "require": {
+                "hyperf/engine": "^2.0",
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Functions.php"
+                ],
+                "psr-4": {
+                    "Hyperf\\Coordinator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Hyperf Coordinator",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "Coordinator",
+                "hyperf",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-06-17T09:00:01+00:00"
+        },
+        {
+            "name": "hyperf/coroutine",
+            "version": "v3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/coroutine.git",
+                "reference": "f13925ad9d743ed1bba165a25ffaad1a233ed016"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/coroutine/zipball/f13925ad9d743ed1bba165a25ffaad1a233ed016",
+                "reference": "f13925ad9d743ed1bba165a25ffaad1a233ed016",
+                "shasum": ""
+            },
+            "require": {
+                "hyperf/context": "~3.2.0",
+                "hyperf/contract": "~3.2.0",
+                "hyperf/engine": "^2.14.0",
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Functions.php"
+                ],
+                "psr-4": {
+                    "Hyperf\\Coroutine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Hyperf Coroutine",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "coroutine",
+                "hyperf",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-06-15T09:37:20+00:00"
+        },
+        {
+            "name": "hyperf/engine",
+            "version": "v2.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/engine.git",
+                "reference": "15c282e8fcf8596f3400ccd21c32a18a37036b9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/engine/zipball/15c282e8fcf8596f3400ccd21c32a18a37036b9a",
+                "reference": "15c282e8fcf8596f3400ccd21c32a18a37036b9a",
+                "shasum": ""
+            },
+            "require": {
+                "hyperf/engine-contract": "~1.14.0",
+                "php": ">=8.0"
+            },
+            "conflict": {
+                "ext-swoole": "<5.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "hyperf/guzzle": "^3.0",
+                "hyperf/http-message": "^3.0",
+                "hyperf/laminas-mime": "^3.0",
+                "mockery/mockery": "^1.5",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^9.4",
+                "swoole/ide-helper": "dev-master"
+            },
+            "suggest": {
+                "ext-sockets": "*",
+                "ext-swoole": ">=5.0",
+                "hyperf/http-message": "Required to use ResponseEmitter.",
+                "psr/http-message": "Required to use WebSocket Frame."
+            },
+            "type": "library",
+            "extra": {
+                "hyperf": {
+                    "config": "Hyperf\\Engine\\ConfigProvider"
+                },
+                "branch-alias": {
+                    "dev-master": "2.15-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Functions.php"
+                ],
+                "psr-4": {
+                    "Hyperf\\Engine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Coroutine engine provided by swoole.",
+            "keywords": [
+                "engine",
+                "hyperf",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "issues": "https://github.com/hyperf/engine/issues",
+                "source": "https://github.com/hyperf/engine/tree/v2.15.0"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-11-19T05:52:31+00:00"
+        },
+        {
+            "name": "hyperf/engine-contract",
+            "version": "v1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/engine-contract.git",
+                "reference": "b6c8ff556fca5d4ffa29fba819fefc5e3572025d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/engine-contract/zipball/b6c8ff556fca5d4ffa29fba819fefc5e3572025d",
+                "reference": "b6c8ff556fca5d4ffa29fba819fefc5e3572025d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "mockery/mockery": "^1.0",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": ">=7.0",
+                "psr/http-message": "^1.0",
+                "swoole/ide-helper": "^4.5"
+            },
+            "suggest": {
+                "psr/http-message": "Required to use WebSocket Frame."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.14-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Engine\\Contract\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Contract for Coroutine Engine",
+            "keywords": [
+                "contract",
+                "coroutine",
+                "engine",
+                "hyperf",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/hyperf/engine-contract/issues",
+                "source": "https://github.com/hyperf/engine-contract/tree/v1.14.0"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-11-18T13:06:54+00:00"
+        },
+        {
+            "name": "hyperf/framework",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/framework.git",
+                "reference": "507220bf93d8be11ddf1fa299cc457983a22fe71"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/framework/zipball/507220bf93d8be11ddf1fa299cc457983a22fe71",
+                "reference": "507220bf93d8be11ddf1fa299cc457983a22fe71",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1.2",
+                "hyperf/contract": "~3.2.0",
+                "hyperf/coordinator": "~3.2.0",
+                "hyperf/coroutine": "~3.2.0",
+                "php": ">=8.2",
+                "psr/container": "^1.0 || ^2.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0"
+            },
+            "suggest": {
+                "ext-swoole": "Required to use swoole engine.",
+                "hyperf/command": "Required to use Command annotation.",
+                "hyperf/di": "Required to use Command annotation.",
+                "hyperf/dispatcher": "Required to use BootApplication event.",
+                "symfony/event-dispatcher": "Required to use symfony event dispatcher (^6.0 || ^7.0)."
+            },
+            "type": "library",
+            "extra": {
+                "hyperf": {
+                    "config": "Hyperf\\Framework\\ConfigProvider"
+                },
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Framework\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "Microservice",
+                "framework",
+                "hyperf",
+                "middleware",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-06-07T09:04:32+00:00"
+        },
+        {
+            "name": "hyperf/macroable",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/macroable.git",
+                "reference": "a091143dacac7de8b6c96d03aff114851cf38641"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/macroable/zipball/a091143dacac7de8b6c96d03aff114851cf38641",
+                "reference": "a091143dacac7de8b6c96d03aff114851cf38641",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Macroable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Hyperf Macroable package which come from illuminate/macroable",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "macroable",
+                "php",
+                "swoole"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "funding": [
+                {
+                    "url": "https://hyperf.wiki/#/zh-cn/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/hyperf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-06-07T09:04:32+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
+            },
+            "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/event-dispatcher/issues",
+                "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
+            },
+            "time": "2019-01-08T18:20:26+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
+            },
+            "time": "2024-09-11T13:17:53+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.1"
+    },
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
+}
