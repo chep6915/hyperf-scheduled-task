@@ -9,6 +9,10 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
+            // 🔑 讓 Hyperf 自動偵測並載入這個常駐進程
+            'processes' => [
+                \Chep6915\HyperfScheduledTask\Process\HighFrequencySchedulerProcess::class,
+            ],
             // 🔑 關鍵：定義發布的檔案對照
             'publish' => [
                 [
