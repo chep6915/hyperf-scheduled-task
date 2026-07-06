@@ -78,12 +78,14 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
 
         try {
             // 1. 更新狀態為 RUNNING
+            $now = Carbon::now();
             $updated = $db->table('task_execution_logs')
                 ->where('id', $logId)
                 ->where('status', TaskExecutionStatus::PENDING->value) // 樂觀鎖
                 ->update([
                     'status' => TaskExecutionStatus::RUNNING->value,
-                    'started_at' => Carbon::now()->format('Y-m-d H:i:s.v'),
+                    'started_at' => $now->format('Y-m-d H:i:s.v'),
+                    'updated_at' => $now->format('Y-m-d H:i:s.v'),
                 ]);
 
             // 如果更新失敗，表示已被其他進程處理
@@ -122,13 +124,15 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
             $executionTime = (int)((microtime(true) - $startTime) * 1000); // 毫秒
 
             // 4. 更新狀態為 SUCCESS
+            $completeTime = Carbon::now();
             $db->table('task_execution_logs')
                 ->where('id', $logId)
                 ->update([
                     'status' => TaskExecutionStatus::SUCCESS->value,
-                    'completed_at' => Carbon::now()->format('Y-m-d H:i:s.v'),
+                    'completed_at' => $completeTime->format('Y-m-d H:i:s.v'),
                     'execution_time' => $executionTime,
                     'result' => is_string($result) ? $result : json_encode($result, JSON_UNESCAPED_UNICODE),
+                    'updated_at' => $completeTime->format('Y-m-d H:i:s.v'),
                 ]);
 
             $logger->info("✅ 任務執行成功 [{$taskName}] (LogID: {$logId}, 耗時: {$executionTime}ms)");
@@ -137,13 +141,15 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
             $executionTime = isset($startTime) ? (int)((microtime(true) - $startTime) * 1000) : 0;
 
             // 更新狀態為 FAILED
+            $failTime = Carbon::now();
             $db->table('task_execution_logs')
                 ->where('id', $logId)
                 ->update([
                     'status' => TaskExecutionStatus::FAILED->value,
-                    'completed_at' => Carbon::now()->format('Y-m-d H:i:s.v'),
+                    'completed_at' => $failTime->format('Y-m-d H:i:s.v'),
                     'execution_time' => $executionTime,
                     'result' => $e->getMessage(),
+                    'updated_at' => $failTime->format('Y-m-d H:i:s.v'),
                 ]);
 
             $logger->error("❌ 任務執行失敗 [{$taskName}] (LogID: {$logId}): " . $e->getMessage());

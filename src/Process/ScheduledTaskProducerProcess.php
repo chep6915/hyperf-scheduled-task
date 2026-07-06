@@ -78,6 +78,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
                 if ($e->getCode() != '23000') {
                     $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
                 }
+                return ;
             } catch (Throwable $e) {
                 $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
             }
