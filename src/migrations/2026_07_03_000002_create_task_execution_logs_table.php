@@ -23,13 +23,13 @@ class CreateTaskExecutionLogsTable extends Migration
             $table->timestamp('started_at')->nullable()->comment('實際開始時間');
             $table->timestamp('completed_at')->nullable()->comment('完成時間');
 
-            $table->unsignedInteger('execution_time')->nullable()->comment('執行花費毫秒');
+            $table->unsignedInteger('execution_time')->nullable()->comment('執行花費秒數');
 
             $table->text('result')->nullable()->comment('執行結果 / 錯誤訊息');
             $table->string('remark', 255)->nullable()->comment('備註');
 
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate();
+            $table->timestamp('updated_at')->nullable();
 
             // ==================== 索引優化 ====================
             $table->unique(['task_id', 'plan_execute_time'], 'uk_task_plan_time');     // 防重複最重要

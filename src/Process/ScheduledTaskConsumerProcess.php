@@ -78,14 +78,14 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
 
         try {
             // 1. 更新狀態為 RUNNING
-            $now = Carbon::now();
+            $now = Carbon::now()->format('Y-m-d H:i:s');
             $updated = $db->table('task_execution_logs')
                 ->where('id', $logId)
                 ->where('status', TaskExecutionStatus::PENDING->value) // 樂觀鎖
                 ->update([
                     'status' => TaskExecutionStatus::RUNNING->value,
-                    'started_at' => $now->format('Y-m-d H:i:s.v'),
-                    'updated_at' => $now->format('Y-m-d H:i:s.v'),
+                    'started_at' => $now,
+                    'updated_at' => $now,
                 ]);
 
             // 如果更新失敗，表示已被其他進程處理
@@ -121,35 +121,35 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
 
             $result = $taskInstance->execute($logId);
 
-            $executionTime = (int)((microtime(true) - $startTime) * 1000); // 毫秒
+            $executionTime = (int)(microtime(true) - $startTime); // 秒數
 
             // 4. 更新狀態為 SUCCESS
-            $completeTime = Carbon::now();
+            $completeTime = Carbon::now()->format('Y-m-d H:i:s');
             $db->table('task_execution_logs')
                 ->where('id', $logId)
                 ->update([
                     'status' => TaskExecutionStatus::SUCCESS->value,
-                    'completed_at' => $completeTime->format('Y-m-d H:i:s.v'),
+                    'completed_at' => $completeTime,
                     'execution_time' => $executionTime,
                     'result' => is_string($result) ? $result : json_encode($result, JSON_UNESCAPED_UNICODE),
-                    'updated_at' => $completeTime->format('Y-m-d H:i:s.v'),
+                    'updated_at' => $completeTime,
                 ]);
 
-            $logger->info("✅ 任務執行成功 [{$taskName}] (LogID: {$logId}, 耗時: {$executionTime}ms)");
+            $logger->info("✅ 任務執行成功 [{$taskName}] (LogID: {$logId}, 耗時: {$executionTime}s)");
 
         } catch (Throwable $e) {
-            $executionTime = isset($startTime) ? (int)((microtime(true) - $startTime) * 1000) : 0;
+            $executionTime = isset($startTime) ? (int)(microtime(true) - $startTime) : 0;
 
             // 更新狀態為 FAILED
-            $failTime = Carbon::now();
+            $failTime = Carbon::now()->format('Y-m-d H:i:s');
             $db->table('task_execution_logs')
                 ->where('id', $logId)
                 ->update([
                     'status' => TaskExecutionStatus::FAILED->value,
-                    'completed_at' => $failTime->format('Y-m-d H:i:s.v'),
+                    'completed_at' => $failTime,
                     'execution_time' => $executionTime,
                     'result' => $e->getMessage(),
-                    'updated_at' => $failTime->format('Y-m-d H:i:s.v'),
+                    'updated_at' => $failTime,
                 ]);
 
             $logger->error("❌ 任務執行失敗 [{$taskName}] (LogID: {$logId}): " . $e->getMessage());
