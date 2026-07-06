@@ -31,21 +31,27 @@ class ScheduledTaskProducerProcess extends AbstractProcess
         $container = ApplicationContext::getContainer();
         $logger = $container->get(StdoutLoggerInterface::class);
         $resolver = $container->get(ConnectionResolverInterface::class);
-        $db = $resolver->connection('default');
 
         $logger->info("🚀 ScheduledTaskProducer（預產生 Pending）已啟動...");
 
         // 初始同步任務
+        $db = $resolver->connection('default');
         $this->refreshTasksFromDatabase($db, $logger);
 
         // 每 60 秒刷新一次任務清單
-        SwooleTimer::tick(60 * 1000, function () use ($db, $logger) {
-            $this->refreshTasksFromDatabase($db, $logger);
+        SwooleTimer::tick(60 * 1000, function () use ($resolver, $logger) {
+            Coroutine::create(function () use ($resolver, $logger) {
+                $db = $resolver->connection('default');
+                $this->refreshTasksFromDatabase($db, $logger);
+            });
         });
 
         // 每 30 秒執行一次「產生未來 4 小時的 Pending 紀錄」
-        SwooleTimer::tick(30 * 1000, function () use ($db, $logger) {
-            $this->generatePendingRecordsFromTime(Carbon::now(), $db, $logger);
+        SwooleTimer::tick(30 * 1000, function () use ($resolver, $logger) {
+            Coroutine::create(function () use ($resolver, $logger) {
+                $db = $resolver->connection('default');
+                $this->generatePendingRecordsFromTime(Carbon::now(), $db, $logger);
+            });
         });
 
         $logger->info("⏳ Producer 已進入排程預產生模式（每 30 秒產生未來 4 小時紀錄）");

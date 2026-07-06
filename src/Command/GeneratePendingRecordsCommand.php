@@ -34,9 +34,10 @@ class GeneratePendingRecordsCommand extends HyperfCommand
         $resolver = $this->container->get(ConnectionResolverInterface::class);
         $db = $resolver->connection('default');
 
-        // 取得時間參數，預設為當前時間
+        // 取得時間參數，預設為當前時間（移除毫秒，對齊整數秒）
         $timeOption = $this->input->getOption('time');
         $startTime = $timeOption ? Carbon::parse($timeOption) : Carbon::now();
+        $startTime->setMicroseconds(0);
 
         $logger->info("🚀 開始產生 Pending 紀錄，起始時間: {$startTime->format('Y-m-d H:i:s')}");
 
