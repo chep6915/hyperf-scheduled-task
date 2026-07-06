@@ -68,10 +68,9 @@ class GeneratePendingRecordsCommand extends HyperfCommand
 
             $tasksArray = json_decode(json_encode($tasks), true);
 
-            // 使用反射設定私有屬性
+            // 使用反射設定私有屬性（PHP 8.1+ 不需要 setAccessible）
             $reflection = new \ReflectionClass($process);
             $property = $reflection->getProperty('scheduledTasks');
-            $property->setAccessible(true);
             $property->setValue($process, $tasksArray);
 
             $logger->info("🔄 已同步 " . count($tasksArray) . " 筆排程任務");
