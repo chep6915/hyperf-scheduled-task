@@ -60,3 +60,50 @@
 
 ```bash
 composer require chep6915/hyperf-scheduled-task
+
+## ⚙️ 進階配置
+
+### 並發數量調整
+
+預設並發數為 **10 個協程**，可以根據需求調整。
+
+### 資料庫連接池配置
+
+如果出現 `Connection pool exhausted` 錯誤，需要調整連接池大小。
+
+編輯 `config/autoload/databases.php`：
+
+```php
+'pool' => [
+    'min_connections' => 5,
+    'max_connections' => 50,  // 確保大於並發數
+    'wait_timeout' => 3.0,
+],
+```
+
+**重要**：`max_connections` 應該大於 Consumer 的並發數。
+
+詳細配置請參考：[DATABASE_POOL_CONFIG.md](DATABASE_POOL_CONFIG.md)
+
+---
+
+## 🚨 常見問題
+
+### Q1: 出現 "Connection pool exhausted" 錯誤
+
+**解決方案**：
+1. 增加連接池大小（推薦）
+2. 降低 Consumer 並發數到 5-10
+
+### Q2: 如何調整並發數
+
+並發數預設為 10，在使用時建議：
+- 輕量任務：10-20 並發
+- 中度任務：5-10 並發  
+- 重度任務：3-5 並發
+
+---
+
+## 📄 License
+
+MIT
