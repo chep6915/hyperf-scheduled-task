@@ -18,10 +18,10 @@ class CreateTaskExecutionLogsTable extends Migration
 
             $table->tinyInteger('status')->default(1)->comment('1=pending, 2=running, 3=success, 4=failed, 5=cancelled');
 
-            $table->timestamp('plan_execute_time')->comment('預計執行時間');
+            $table->dateTime('plan_execute_time')->comment('預計執行時間');
 
-            $table->timestamp('started_at')->nullable()->comment('實際開始時間');
-            $table->timestamp('completed_at')->nullable()->comment('完成時間');
+            $table->dateTime('started_at')->nullable()->comment('實際開始時間');
+            $table->dateTime('completed_at')->nullable()->comment('完成時間');
 
             $table->unsignedInteger('execution_time')->nullable()->comment('執行花費秒數');
 
