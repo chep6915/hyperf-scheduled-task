@@ -28,8 +28,8 @@ class CreateTaskExecutionLogsTable extends Migration
             $table->text('result')->nullable()->comment('執行結果 / 錯誤訊息');
             $table->string('remark', 255)->nullable()->comment('備註');
 
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('created_at')->useCurrent()->comment('新增時間');
+            $table->timestamp('updated_at')->useCurrentOnUpdate()->comment('修改時間');
 
             // ==================== 索引優化 ====================
             $table->unique(['task_id', 'plan_execute_time'], 'uk_task_plan_time');     // 防重複最重要
