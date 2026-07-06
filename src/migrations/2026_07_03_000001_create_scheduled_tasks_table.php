@@ -18,9 +18,9 @@ class CreateScheduledTasksTable extends Migration
             $table->tinyInteger('status')->default(1)->comment('狀態: 0=停用, 1=啟用');
             $table->string('remark', 255)->nullable()->comment('備註');
 
-            $table->timestamp('created_at', 3)->useCurrent()->comment('新增時間');
-            $table->timestamp('updated_at', 3)->useCurrentOnUpdate()->comment('修改時間');
-            $table->timestamp('deleted_at', 3)->nullable()->comment('軟刪除時間');
+            $table->timestamp('created_at')->useCurrent()->comment('新增時間');
+            $table->timestamp('updated_at')->useCurrentOnUpdate()->comment('修改時間');
+            $table->timestamp('deleted_at')->nullable()->comment('軟刪除時間');
 
             $table->index('status', 'idx_status');
         });
