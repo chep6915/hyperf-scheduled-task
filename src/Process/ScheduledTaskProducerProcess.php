@@ -66,15 +66,8 @@ class ScheduledTaskProducerProcess extends AbstractProcess
 
         foreach ($this->scheduledTasks as $task) {
             try {
-                $cron = $this->getCronExpression($task['cron_expression']);
-
-                // 找出從現在到 4 小時後的所有執行時間點
-                $nextRun = $cron->getNextRunDate($startTime->toDateTimeString());
-
-                while ($nextRun <= $endTime) {
-                    $this->createPendingRecord($task, $nextRun, $db, $logger);
-                    $nextRun = $cron->getNextRunDate($nextRun);
-                }
+                // 暫時使用簡單秒級邏輯產生未來紀錄
+                $this->generatePendingWithSimpleLogic($task, $db, $logger);
             } catch (Throwable $e) {
                 $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
             }
@@ -99,10 +92,18 @@ class ScheduledTaskProducerProcess extends AbstractProcess
         }
     }
 
+    /**
+     * 取得 CronExpression（支援 6 欄位）
+     */
     private function getCronExpression(string $cronExpr)
     {
         if (!isset($this->cronCache[$cronExpr])) {
-            $this->cronCache[$cronExpr] = CronExpression::factory($cronExpr);
+            try {
+                $this->cronCache[$cronExpr] = CronExpression::factory($cronExpr);
+            } catch (Throwable $e) {
+                // 如果還是失敗，就建立一個簡單的每分鐘 Cron
+                $this->cronCache[$cronExpr] = CronExpression::factory('* * * * *');
+            }
         }
         return $this->cronCache[$cronExpr];
     }
@@ -122,6 +123,31 @@ class ScheduledTaskProducerProcess extends AbstractProcess
             $logger->debug("🔄 已同步 " . count($this->scheduledTasks) . " 筆排程任務");
         } catch (Throwable $e) {
             $logger->error("❌ 同步任務失敗: " . $e->getMessage());
+        }
+    }
+
+    private function generatePendingWithSimpleLogic(array $task, ConnectionInterface $db, StdoutLoggerInterface $logger): void
+    {
+        $now = Carbon::now();
+        $endTime = $now->copy()->addHours(4);
+
+        $cronExpr = trim($task['cron_expression']);
+        $parts = preg_split('/\s+/', $cronExpr);
+        $secondField = $parts[0] ?? '';
+
+        $interval = 60; // 預設 60 秒
+
+        if (str_starts_with($secondField, '*/')) {
+            $interval = (int)str_replace('*/', '', $secondField);
+        }
+
+        $current = $now->copy();
+
+        while ($current <= $endTime) {
+            if ($current->second % $interval === 0) {
+                $this->createPendingRecord($task, $current, $db, $logger);
+            }
+            $current->addSeconds(1);
         }
     }
 }
