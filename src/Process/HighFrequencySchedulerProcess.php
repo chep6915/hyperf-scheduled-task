@@ -11,7 +11,7 @@ use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Database\ConnectionInterface;
 use Hyperf\AsyncQueue\Driver\DriverFactory;
 use Cron\CronExpression;
-use Swow\Timer;
+use Swoole\Timer as SwooleTimer;
 use Throwable;
 
 #[Process(name: "HighFrequencySchedulerProcess")]
@@ -46,12 +46,12 @@ class HighFrequencySchedulerProcess extends AbstractProcess
 
         // 2. 設定一個「每 60 秒」執行的常規時鐘，用來定時刷新資料庫配置（動態上下架排程）
         $refreshIntervalMs = 60 * 1000;
-        Timer::tick($refreshIntervalMs, function () use ($db, $logger) {
+        SwooleTimer::tick($refreshIntervalMs, function () use ($db, $logger) {
             $this->refreshTasksFromDatabase($db, $logger);
         });
 
         // 3. 🔑 核心：開啟 1 毫秒打點一次的終極高頻微秒時鐘
-        Timer::tick(1, function () use ($db, $driverFactory, $logger) {
+        SwooleTimer::tick(1, function () use ($db, $driverFactory, $logger) {
             $now = time(); // 取得當前秒級時間戳（例如：1719920015）
 
             foreach ($this->scheduledTasks as $task) {
