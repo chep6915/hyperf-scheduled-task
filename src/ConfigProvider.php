@@ -33,10 +33,10 @@ class ConfigProvider
                     'destination' => BASE_PATH . '/migrations/2026_07_03_000002_create_task_execution_logs_table.php', // 固定時間戳
                 ],
                 [
-                    'id' => 'crontab',
-                    'description' => 'The Crontab directory for scheduled task classes.',
-                    'source' => __DIR__ . '/stubs/Crontab/.gitkeep',
-                    'destination' => BASE_PATH . '/app/Crontab/.gitkeep',
+                    'id' => 'job',
+                    'description' => 'Job stub for scheduled tasks.',
+                    'source' => __DIR__ . '/stubs/ScheduledJob.php',
+                    'destination' => BASE_PATH . '/app/Job/ScheduledJob.php',
                 ],
             ],
         ];

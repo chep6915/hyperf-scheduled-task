@@ -13,8 +13,9 @@ class CreateScheduledTasksTable extends Migration
         Schema::create('scheduled_tasks', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('自增主鍵');
             $table->string('name', 100)->unique()->comment('排程名稱');
-            $table->string('execute_class', 255)->comment('執行類別全名');
-            $table->string('cron_expression', 100)->comment('Cron 表達式');
+            $table->string('job_class', 255)->comment('Job 類別全名');
+            $table->string('queue_name', 50)->default('default')->comment('隊列名稱');
+            $table->string('cron_expression', 100)->comment('Cron 表達式（6 欄位含秒）');
             $table->tinyInteger('status')->default(1)->comment('狀態: 0=停用, 1=啟用');
             $table->string('remark', 255)->nullable()->comment('備註');
 

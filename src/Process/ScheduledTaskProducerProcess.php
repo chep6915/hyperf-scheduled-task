@@ -129,7 +129,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
             $tasks = $db->table('scheduled_tasks')
                 ->where('status', 1)
                 ->whereNull('deleted_at')
-                ->get(['id', 'name', 'execute_class', 'cron_expression'])
+                ->get(['id', 'name', 'job_class', 'cron_expression'])
                 ->toArray();
 
             $this->scheduledTasks = json_decode(json_encode($tasks), true);

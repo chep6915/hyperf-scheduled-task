@@ -14,6 +14,7 @@ use Hyperf\Database\ConnectionResolverInterface;
 use Swoole\Timer as SwooleTimer;
 use Hyperf\Coroutine\Coroutine;
 use Hyperf\Coroutine\Parallel;
+use Hyperf\AsyncQueue\Driver\DriverFactory;
 use Throwable;
 
 #[Process(name: "ScheduledTaskConsumer", nums: 1)]
@@ -88,7 +89,6 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
         $logId = $log->id;
         $taskName = $log->task_name;
         $taskId = $log->task_id;
-        $executeClass = null;
 
         try {
             // ==================== 階段 1：更新狀態為 RUNNING ====================
@@ -119,26 +119,22 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
                 throw new \RuntimeException("任務不存在 (task_id: {$taskId})");
             }
 
-            $executeClass = $task->execute_class;
+            $jobClass = $task->job_class;
+            $queueName = $task->queue_name;
+
             unset($db, $resolver); // 主動釋放連接
 
-            // ==================== 階段 2：執行任務（不持有連接）====================
+            // ==================== 階段 2：派發 Job 到隊列（不持有連接）====================
             $logger->info("▶️  開始執行任務 [{$taskName}] (LogID: {$logId})");
 
-            if (!class_exists($executeClass)) {
-                throw new \RuntimeException("執行類別不存在: {$executeClass}");
-            }
-
-            $taskInstance = $container->get($executeClass);
-
-            if (!method_exists($taskInstance, 'execute')) {
-                throw new \RuntimeException("執行類別缺少 execute() 方法: {$executeClass}");
+            if (!class_exists($jobClass)) {
+                throw new \RuntimeException("Job 類別不存在: {$jobClass}");
             }
 
             $startTime = microtime(true);
 
-            // 執行任務（此時不持有資料庫連接）
-            $result = $taskInstance->execute($logId);
+            // 派發到異步隊列
+            $result = $this->dispatchJob($jobClass, $queueName, $logId, $container, $logger);
 
             $executionTime = (int)(microtime(true) - $startTime);
 
@@ -188,4 +184,24 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
             $logger->error("❌ 任務執行失敗 [{$taskName}] (LogID: {$logId}): " . $e->getMessage());
         }
     }
+
+    /**
+     * 派發 Job 到異步隊列
+     */
+    private function dispatchJob(string $jobClass, string $queueName, int $logId, $container, StdoutLoggerInterface $logger)
+    {
+        $driverFactory = $container->get(DriverFactory::class);
+        $driver = $driverFactory->get($queueName);
+
+        // 實例化 Job 並傳入 logId
+        $job = new $jobClass($logId);
+
+        // 派發到隊列
+        $driver->push($job);
+
+        $logger->info("📤 已派發 Job 到隊列 [{$queueName}] (LogID: {$logId})");
+
+        return "已派發到隊列: {$queueName}";
+    }
+
 }
