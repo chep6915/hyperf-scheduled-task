@@ -78,7 +78,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
                 if ($e->getCode() != '23000') {
                     $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
                 }
-                return ;
+                return;
             } catch (Throwable $e) {
                 $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
             }
@@ -90,15 +90,20 @@ class ScheduledTaskProducerProcess extends AbstractProcess
         try {
             $now = Carbon::now()->format('Y-m-d H:i:s');
             $logId = $db->table('task_execution_logs')->insertGetId([
-                'task_id'          => $task['id'],
-                'task_name'        => $task['name'],
-                'status'           => TaskExecutionStatus::PENDING->value,
-                'plan_execute_time'=> $executeTime->format('Y-m-d H:i:s'),
-                'created_at'       => $now,
-                'updated_at'       => $now,
+                'task_id' => $task['id'],
+                'task_name' => $task['name'],
+                'status' => TaskExecutionStatus::PENDING->value,
+                'plan_execute_time' => $executeTime->format('Y-m-d H:i:s'),
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
 
             $logger->debug("📝 已預產生 Pending 紀錄 | 任務: {$task['name']} | 執行時間: {$executeTime->format('H:i:s')} | LogID: {$logId}");
+        } catch (Hyperf\Database\Exception\UniqueConstraintViolationException $e) {
+            if ($e->getCode() != '23000') {
+                $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
+            }
+            return;
         } catch (Throwable $e) {
             $logger->error("❌ 寫入 Pending 失敗: " . $e->getMessage());
         }

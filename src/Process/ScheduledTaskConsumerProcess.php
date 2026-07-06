@@ -12,6 +12,8 @@ use Hyperf\Context\ApplicationContext;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Database\ConnectionResolverInterface;
 use Swoole\Timer as SwooleTimer;
+use Hyperf\Coroutine\Coroutine;
+use Hyperf\Coroutine\Parallel;
 use Throwable;
 
 #[Process(name: "ScheduledTaskConsumer", nums: 1)]
@@ -58,11 +60,18 @@ class ScheduledTaskConsumerProcess extends AbstractProcess
                 return;
             }
 
-            $logger->debug("📦 發現 " . count($pendingLogs) . " 筆待執行任務");
+            $logger->debug("📦 發現 " . count($pendingLogs) . " 筆待執行任務，使用協程並發執行");
+
+            // 使用協程並發執行任務
+            $parallel = new Parallel(50); // 最多同時執行 50 個協程
 
             foreach ($pendingLogs as $log) {
-                $this->executeTask($log, $db, $logger, $container);
+                $parallel->add(function () use ($log, $db, $logger, $container) {
+                    $this->executeTask($log, $db, $logger, $container);
+                });
             }
+
+            $parallel->wait();
         } catch (Throwable $e) {
             $logger->error("❌ 消費任務失敗: " . $e->getMessage());
         }
