@@ -13,6 +13,7 @@ use Hyperf\AsyncQueue\Driver\DriverFactory;
 use Cron\CronExpression;
 use Swoole\Timer as SwooleTimer;
 use Throwable;
+use Hyperf\Database\ConnectionResolverInterface;
 
 #[Process(name: "HighFrequencySchedulerProcess")]
 class HighFrequencySchedulerProcess extends AbstractProcess
@@ -36,7 +37,8 @@ class HighFrequencySchedulerProcess extends AbstractProcess
     {
         $container = ApplicationContext::getContainer();
         $logger = $container->get(StdoutLoggerInterface::class);
-        $db = $container->get(ConnectionInterface::class);
+        $resolver = $container->get(ConnectionResolverInterface::class);
+        $db = $resolver->connection('default'); // 這樣拿到的才是真正可以運作的 Connection 實例！
         $driverFactory = $container->get(DriverFactory::class);
 
         $logger->info("🚀 高精度多頻率排程守護進程（Producer）已成功啟動...");
