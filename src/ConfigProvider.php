@@ -13,6 +13,10 @@ class ConfigProvider
             'processes' => [
                 \Chep6915\HyperfScheduledTask\Process\ScheduledTaskProducerProcess::class,
             ],
+            // 🔑 註冊 Command
+            'commands' => [
+                \Chep6915\HyperfScheduledTask\Command\GeneratePendingRecordsCommand::class,
+            ],
             // 🔑 關鍵：定義發布的檔案對照
             'publish' => [
                 [

@@ -16,6 +16,7 @@ use Throwable;
 use Hyperf\Database\ConnectionResolverInterface;
 use Hyperf\Coroutine\Coroutine;
 use Carbon\Carbon;
+use Chep6915\HyperfScheduledTask\Enum\TaskExecutionStatus;
 
 #[Process(name: "ScheduledTaskProducer")]
 class ScheduledTaskProducerProcess extends AbstractProcess
@@ -44,7 +45,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
 
         // 每 30 秒執行一次「產生未來 4 小時的 Pending 紀錄」
         SwooleTimer::tick(30 * 1000, function () use ($db, $logger) {
-            $this->generateFuturePendingRecords($db, $logger);
+            $this->generatePendingRecordsFromTime(Carbon::now(), $db, $logger);
         });
 
         $logger->info("⏳ Producer 已進入排程預產生模式（每 30 秒產生未來 4 小時紀錄）");
@@ -55,11 +56,10 @@ class ScheduledTaskProducerProcess extends AbstractProcess
     }
 
     /**
-     * 產生未來 4 小時的 Pending 紀錄
+     * 產生未來 4 小時的 Pending 紀錄（從指定時間開始）
      */
-    private function generateFuturePendingRecords(ConnectionInterface $db, StdoutLoggerInterface $logger): void
+    public function generatePendingRecordsFromTime(Carbon $startTime, ConnectionInterface $db, StdoutLoggerInterface $logger): void
     {
-        $startTime = Carbon::now();
         $endTime = $startTime->copy()->addHours(4);
 
         $logger->info("📅 開始產生未來 4 小時 Pending 紀錄，從 {$startTime->format('H:i:s')} 到 {$endTime->format('H:i:s')}");
@@ -67,7 +67,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
         foreach ($this->scheduledTasks as $task) {
             try {
                 // 暫時使用簡單秒級邏輯產生未來紀錄
-                $this->generatePendingWithSimpleLogic($task, $db, $logger);
+                $this->generatePendingWithSimpleLogic($task, $startTime, $endTime, $db, $logger);
             } catch (Throwable $e) {
                 $logger->error("❌ 產生任務 [{$task['name']}] Pending 失敗: " . $e->getMessage());
             }
@@ -80,7 +80,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
             $logId = $db->table('task_execution_logs')->insertGetId([
                 'task_id'          => $task['id'],
                 'task_name'        => $task['name'],
-                'status'           => 'pending',
+                'status'           => TaskExecutionStatus::PENDING->value,
                 'plan_execute_time'=> $executeTime->format('Y-m-d H:i:s'),
                 'created_at'       => date('Y-m-d H:i:s.v'),
                 'updated_at'       => date('Y-m-d H:i:s.v'),
@@ -126,11 +126,8 @@ class ScheduledTaskProducerProcess extends AbstractProcess
         }
     }
 
-    private function generatePendingWithSimpleLogic(array $task, ConnectionInterface $db, StdoutLoggerInterface $logger): void
+    private function generatePendingWithSimpleLogic(array $task, Carbon $startTime, Carbon $endTime, ConnectionInterface $db, StdoutLoggerInterface $logger): void
     {
-        $now = Carbon::now();
-        $endTime = $now->copy()->addHours(4);
-
         $cronExpr = trim($task['cron_expression']);
         $parts = preg_split('/\s+/', $cronExpr);
         $secondField = $parts[0] ?? '';
@@ -141,7 +138,7 @@ class ScheduledTaskProducerProcess extends AbstractProcess
             $interval = (int)str_replace('*/', '', $secondField);
         }
 
-        $current = $now->copy();
+        $current = $startTime->copy();
 
         while ($current <= $endTime) {
             if ($current->second % $interval === 0) {
